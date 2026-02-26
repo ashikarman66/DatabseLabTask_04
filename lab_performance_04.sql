@@ -1,0 +1,68 @@
+CREATE DATABASE IF NOT EXISTS LabPerformance04;
+USE LabPerformance04;
+
+CREATE TABLE COUNTRY (
+    CountryId INT PRIMARY KEY,
+    CountryName VARCHAR(50) NOT NULL UNIQUE,
+    Continent VARCHAR(30) NOT NULL,
+    Currency VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE DEPARTMENT (
+    DepartmentId INT PRIMARY KEY,
+    DeptName VARCHAR(50) NOT NULL,
+    CountryId INT NOT NULL,
+    FOREIGN KEY (CountryId) REFERENCES COUNTRY(CountryId)
+);
+
+CREATE TABLE EMPLOYEE (
+    EmpID INT PRIMARY KEY,
+    EmpName VARCHAR(50) NOT NULL,
+    DeptId INT NOT NULL,
+    FOREIGN KEY (DeptId) REFERENCES DEPARTMENT(DepartmentId)
+);
+
+CREATE TABLE FOLDER (
+    FolderId INT PRIMARY KEY,
+    EmpId INT NOT NULL,
+    AccessType ENUM('READ', 'WRITE', 'FULL') NOT NULL,
+    FOREIGN KEY (EmpId) REFERENCES EMPLOYEE(EmpID)
+);
+
+INSERT INTO COUNTRY VALUES
+(1, 'Bangladesh', 'Asia', 'BDT'),
+(2, 'India', 'Asia', 'INR'),
+(3, 'USA', 'North America', 'USD'),
+(4, 'Germany', 'Europe', 'EUR'),
+(5, 'Japan', 'Asia', 'Yen');
+
+INSERT INTO DEPARTMENT VALUES
+(101, 'HR', 1),
+(102, 'IT', 2),
+(103, 'Finance', 3),
+(104, 'Marketing', 4),
+(105, 'Research', 5);
+
+INSERT INTO EMPLOYEE VALUES
+(1001, 'Rahim', 101),
+(1002, 'Karim', 102),
+(1003, 'John', 103),
+(1004, 'Anna', 104),
+(1005, 'Sato', 105);
+
+INSERT INTO FOLDER VALUES
+(201, 1001, 'READ'),
+(202, 1002, 'WRITE'),
+(203, 1003, 'FULL'),
+(204, 1004, 'READ'),
+(205, 1005, 'WRITE');
+
+DESCRIBE COUNTRY;
+DESCRIBE DEPARTMENT;
+DESCRIBE EMPLOYEE;
+DESCRIBE FOLDER;
+
+SELECT * FROM COUNTRY;
+SELECT * FROM DEPARTMENT;
+SELECT * FROM EMPLOYEE;
+SELECT * FROM FOLDER;
